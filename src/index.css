@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  
+  .regimg{
+    height: 100vh;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .imghere {
+    height: 100vh;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .regbox{
+    width: 497px;
+    margin-left: auto;
+    /* position: absolute; */
+    margin-top: 125px;
+  }
+  
+  .regbox p{
+    margin-bottom: 50px;
+  }
+
+
+  .peradiv {
+      margin-left: 100px;
+      margin-top: 15px;
+  }
+
+  .sign {
+    cursor: pointer;
+    color: #EA6C00;
+  }
+
+
+  .eyepass{
+    position: absolute;
+    top: 17px;
+    right: 75px;
+    font-size: 24px;
+  }
+  .eyediv {
+    position: relative;
+  }
+
+  .googlelog{
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+/* 
+  
+.eyecon{
+  position: absolute;
+  top: 21px;
+  right: 242px;
+} */
