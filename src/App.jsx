@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import firebaseConfig from "./firebaseConfig";
+// import firebaseConfig from "./firebaseConfig";
 import LogIn from "./pages/Login";
 import Home from "./pages/Registration";
 
