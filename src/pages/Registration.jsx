@@ -7,11 +7,27 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAuth, createUserWithEmailAndPassword,sendEmailVerification,} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail} from "firebase/auth";
 import { CirclesWithBar } from  'react-loader-spinner'
 import wait from '../../src/assets/wait.gif'
 import { MdVisibilityOff , MdVisibility  } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 
 
@@ -43,11 +59,23 @@ const Registration = () => {
         password:""
     })
      let [loader, setLoader] = useState(false)
+     const [open, setOpen] = useState(false);
+     const handleOpen = () => setOpen(true);
+     const handleClose = () => setOpen(false);
 
 
     let handleChange = (e)=>{
     setRegdata({...regdata,[e.target.name]:e.target.value})
     }
+
+   let handleChageEye = (e) => {
+    if(inputData.password.length>=0 ){
+      setHideEye(true)
+    }
+    if(inputData.password.length==1){
+      setHideEye(false)
+    }
+   }
 
 
     let handleSubmit = ()=> {
@@ -60,7 +88,8 @@ const Registration = () => {
                 setRegdata({
                     email:"",
                     fullname:"",
-                    password:""
+                    password:"",
+
                 })
                 navigate("/login")
                 setLoader(false)
@@ -72,7 +101,7 @@ const Registration = () => {
             // const errorMessage = error.message;
             console.log(errorCode)
             // console.log(errorMessage)
-            if(errorCode.includes("email")){  // email er jonno 
+            if(errorCode.includes("already")){  // email er jonno 
                 toast("email already in used")
             }
             if(errorCode.includes("password")){ // password er jonno 
@@ -123,6 +152,21 @@ const Registration = () => {
    let handleSign =() => {
     navigate("/login")
    }
+
+   let handleForgotPass = ()=> {
+    sendPasswordResetEmail(auth, email)
+  .then(() => {
+    console.log("done")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+   console.log("errocode")
+  });
+   }
+
+
+
   return (
       <Grid container >
         {/* <button onClick={notify}>Notify!</button> */}
@@ -170,6 +214,7 @@ const Registration = () => {
         :
             <>
               <MyButton onClick={handleSubmit} variant="contained">Sign Up</MyButton>
+              <Button onClick={handleOpen}>Forgot Password</Button>
             </>
         }
         <div className='peradiv'>
@@ -182,6 +227,23 @@ const Registration = () => {
         </Grid>
         </>
         }
+   {/*======= Modals Start Here =========== */}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Recover Your Password
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              <MyInput onChange={handleChange} name='email'  id="outlined-basic" label="Email" variant="outlined" />
+              <MyButton onClick={handleForgotPass}  variant="contained">Recover </MyButton>
+              </Typography>
+            </Box>
+          </Modal>
   </Grid>
   )
 }

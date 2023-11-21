@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Grid from '@mui/material/Grid';
 import imghere from '../assets/imghere.jpg'
 import TextField from '@mui/material/TextField';
@@ -13,7 +13,9 @@ import wait from '../assets/wait.gif'
 import { MdVisibilityOff , MdVisibility  } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import google from '../assets/google.png'
-
+import { useDispatch,useSelector } from 'react-redux';
+// import userSlice from '../slice/userSlice';
+import { logedUser } from '../slice/userSlice';
 
 
 
@@ -29,8 +31,11 @@ const MyButton = styled(Button)({
   borderRadius: "86px"
 });
 const Login = () => {
+  let dispatch = useDispatch()
     const auth = getAuth();
     let navigate = useNavigate("")
+    let userInfo = useSelector(state => state.activeUser.value)
+    console.log(userInfo)
     let [passwordeye, setPasswordeye] = useState(false)
     let [regdata,setRegdata] = useState({
         email:"",
@@ -46,6 +51,8 @@ const Login = () => {
         signInWithEmailAndPassword(auth, regdata.email, regdata.password)
         .then((userCredential) => {
             console.log(userCredential)
+            dispatch(logedUser(userCredential.user))
+            localStorage.setItem("user",JSON.stringify(userCredential.user))
             if(userCredential.user.emailVerified){
                 setRegdata({
                     email:"",
@@ -117,6 +124,12 @@ const Login = () => {
     let handlesignUp = () => {
       navigate("/")
     }
+
+    useEffect(()=>{
+      if(userInfo != null){
+        navigate("/home")
+      }
+    },[])
 
 
 
