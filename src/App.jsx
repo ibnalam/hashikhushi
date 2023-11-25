@@ -15,6 +15,7 @@ import Message from "./components/Message";
 import Settings from "./components/Settings";
 import Notify from "./components/Notify";
 import Homee from "./components/Homee";
+import Logout from "./pages/Logout";
 // import Grid from '@mui/material/Grid';
 
 function App() {
@@ -23,9 +24,15 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
+      
         <Route
         path="/"
         element={<Registration />}
+      >
+      </Route>
+        <Route
+        path="/logout"
+        element={<Logout />}
       >
       </Route>
       <Route
@@ -38,7 +45,7 @@ function App() {
         element={<RootLayouts/>}
       >
           <Route
-          path="home"
+          path="homee"
           element={<Homee/>}
           >
           </Route>

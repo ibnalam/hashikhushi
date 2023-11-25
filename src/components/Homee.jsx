@@ -11,7 +11,7 @@ const Homee = () => {
   return (
     <Grid container spacing={2}>
     <Grid item xs={4}>
-      <GroupList/>
+      <GroupList/>   
       <Frindrequest/>
     </Grid>
     <Grid item xs={4}>

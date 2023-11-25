@@ -1,5 +1,4 @@
 import React from 'react'
-
 import friends from "../assets/friends.png"
 import honourse from "../assets/honourse.png"
 import hsc from "../assets/hsc.png"

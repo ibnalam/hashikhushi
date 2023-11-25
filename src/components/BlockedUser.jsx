@@ -23,7 +23,7 @@ const BlockedUser = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={friends} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -31,7 +31,7 @@ const BlockedUser = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={honourse} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -39,7 +39,7 @@ const BlockedUser = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={kiron} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -47,7 +47,7 @@ const BlockedUser = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={sohan} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -55,7 +55,7 @@ const BlockedUser = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={mijan} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>

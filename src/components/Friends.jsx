@@ -23,7 +23,15 @@ const Friends = () => {
     <div className='box'>
         <h1>Friends</h1>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={friends} alt="" />
+            <div>
+                <h3>Friends Reunion</h3>
+                <p>Hi Guys, Wassup!</p>
+            </div>
+            <Button variant="contained">Join</Button>
+        </div>
+        <div className='List'>
+            <img src={honourse} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -39,7 +47,7 @@ const Friends = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={kiron} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -47,7 +55,7 @@ const Friends = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={mijan} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>
@@ -55,15 +63,7 @@ const Friends = () => {
             <Button variant="contained">Join</Button>
         </div>
         <div className='List'>
-            <img src={hsc} alt="" />
-            <div>
-                <h3>Friends Reunion</h3>
-                <p>Hi Guys, Wassup!</p>
-            </div>
-            <Button variant="contained">Join</Button>
-        </div>
-        <div className='List'>
-            <img src={hsc} alt="" />
+            <img src={sohan} alt="" />
             <div>
                 <h3>Friends Reunion</h3>
                 <p>Hi Guys, Wassup!</p>

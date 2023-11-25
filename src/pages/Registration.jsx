@@ -16,6 +16,13 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { getDatabase, ref, set } from "firebase/database";
+
+
+
+
+
+
 
 const style = {
   position: 'absolute',
@@ -46,6 +53,9 @@ const MyInput = styled(TextField) ({
 
 
 const Registration = () => {
+
+  const db = getDatabase();
+  
 
   let [passwordeye, setPasswordeye] = useState(false)
 
@@ -85,6 +95,11 @@ const Registration = () => {
             console.log(userCredential)
             sendEmailVerification(auth.currentUser)
             .then(() => {
+              set(push(ref(db, 'user/'+ userCredential.user.uid)), {
+                username: regdata.fullname,
+                email: userCredential.user,
+                profile_picture : "https://firebasestorage.googleapis.com/v0/b/hashikhushi-825a3.appspot.com/o/%E2%80%94Pngtree%E2%80%94male%20student%20icon_3728104.png?alt=media&token=09f29de6-431d-43a6-923c-c9db7c98a197"
+              });
                 setRegdata({
                     email:"",
                     fullname:"",

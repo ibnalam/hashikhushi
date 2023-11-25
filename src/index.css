@@ -76,32 +76,28 @@
 
   /*  =========== Icon css here  */
 
-  .homeicon{
-    color: #5F35F5;
-    font-size: 45px;
-    margin: 15px 0;
+  .icons {
+    margin-top: 45px;
   }
-  .messageicon {
-    color: white;
-    font-size: 45px;
-    margin: 15px 0;
-  }
-  .noticon{
-    color: white;
-    font-size: 45px;
-    margin: 15px 0;
+  .logpart {
+    margin-top: 60px;
   }
 
-  .settingicon {
-    color: white;
+  .icon{
+    margin: 15px 0; 
+    /* display: flex; */
+    /* justify-content: center; */
     font-size: 45px;
-    margin: 15px 0;
-  }
-  .logicon {
     color: white;
-    font-size: 45px;
-    margin: 15px 0;
   }
+
+ 
+
+  .active .icon{
+    color: #5F35F5;
+ }
+
+
 
   .box {
     background: #fff;

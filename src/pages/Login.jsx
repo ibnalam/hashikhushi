@@ -11,6 +11,7 @@ import { getAuth, createUserWithEmailAndPassword ,  signInWithEmailAndPassword, 
 import { CirclesWithBar } from  'react-loader-spinner'
 import wait from '../assets/wait.gif'
 import { MdVisibilityOff , MdVisibility  } from "react-icons/md";
+
 import { useNavigate } from 'react-router-dom';
 import google from '../assets/google.png'
 import { useDispatch,useSelector } from 'react-redux';
@@ -58,7 +59,7 @@ const Login = () => {
                     email:"",
                     password:""
                 })
-                navigate("/home")
+                navigate("/logout")
                 setLoader(false)
             }else {
                 toast("Please verify your email ")
@@ -118,7 +119,7 @@ const Login = () => {
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
       .then(()=> {
-        navigate("/home")
+        navigate("/login")
       })
     }
     let handlesignUp = () => {
@@ -127,7 +128,7 @@ const Login = () => {
 
     useEffect(()=>{
       if(userInfo != null){
-        navigate("/home")
+        navigate("/logout")
       }
     },[])
 
