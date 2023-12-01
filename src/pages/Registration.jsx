@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAuth, createUserWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail, updateProfile } from "firebase/auth";
 import { CirclesWithBar } from  'react-loader-spinner'
 import wait from '../../src/assets/wait.gif'
 import { MdVisibilityOff , MdVisibility  } from "react-icons/md";
@@ -92,7 +92,9 @@ const Registration = () => {
         setLoader(true)
         createUserWithEmailAndPassword(auth, regdata.email, regdata.password)
         .then((userCredential) => {
-            console.log(userCredential.user.uid)
+          updateProfile(auth.currentUser, {
+            displayName: regdata.fullname, photoURL:  "https://firebasestorage.googleapis.com/v0/b/hashikhushi-825a3.appspot.com/o/%E2%80%94Pngtree%E2%80%94male%20student%20icon_3728104.png?alt=media&token=09f29de6-431d-43a6-923c-c9db7c98a197"
+          }).then(() => {
             sendEmailVerification(auth.currentUser)
             .then(() => {
               set(ref(db, 'users/'+ userCredential.user.uid), {
@@ -109,6 +111,8 @@ const Registration = () => {
                 navigate("/login")
                 setLoader(false)
             });
+          })
+           
           })
           .catch((error) => {
             const errorCode = error.code;

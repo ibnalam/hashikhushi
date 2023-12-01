@@ -227,16 +227,26 @@
 
 
 
+/* profile  */
 
 
+.profilename {
+  color: #fff;
+}
 
+.prevewBox {
+  width: 100px;
+  height: 100px; 
+  overflow: hidden;
+  border-radius: 50%;
+  background: rgb(220, 220, 220);
+}
 
+.img-preview {
+  width: 100px;
+  height: 100px;
 
-
-
-
-
-
+}
 
 
 

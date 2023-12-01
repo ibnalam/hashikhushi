@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import friends from "../assets/friends.png"
 import honourse from "../assets/honourse.png"
 import hsc from "../assets/hsc.png"
@@ -8,7 +9,7 @@ import sohan from "../assets/sohan.png"
 import sonia from "../assets/sonia.png"
 import Button from '@mui/material/Button';
 import { getDatabase, ref, onValue  } from "firebase/database";
-import CustomScroll from 'react-custom-scroll';
+
 
 import TextField from '@mui/material/TextField';
 
@@ -19,6 +20,7 @@ const Userlist = () => {
     let [userList, setUserlist] = useState([])
     let [search, setSearch] = useState([])
     let [empty, setEmpty] = useState([])
+    let userInfo = useSelector((state) => state.activeUser.value)
    
 
     useEffect(()=> {
@@ -26,7 +28,10 @@ const Userlist = () => {
         onValue(userRef, (snapshot) => {
             let arr = []
             snapshot.forEach(item=> {
-                arr.push(item.val())
+                if(item.key != userInfo.uid ){
+                    arr.push(item.val())  
+                }
+                console.log(item.key)
             })
             setUserlist(arr)
         });
@@ -43,7 +48,7 @@ const Userlist = () => {
     
 
         // userList.filter(item=> {
-        //     console.log(item.username.toLowerCase().includes(e.target.value.toLowerCase()))
+        //     console.log(item.username.toLowerCase().includes(e.target.value.toLowerCase())) 
 
         // })
 
@@ -53,7 +58,7 @@ const Userlist = () => {
   return (
 
    <>
-   <CustomScroll>
+   
     <div className='title-box' >
     <h1 className='box-title'>User List </h1>
     </div>
@@ -94,7 +99,7 @@ const Userlist = () => {
 
    
 </div>
-</CustomScroll>
+
    </>
   )
 }
