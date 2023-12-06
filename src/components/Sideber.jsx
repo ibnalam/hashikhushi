@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import profile from '../assets/profil.png'
 import { IoHomeOutline } from "react-icons/io5";
 import { AiTwotoneMessage } from "react-icons/ai";
@@ -7,7 +8,6 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { useState, useRef, createRef } from 'react';
-import { useEffect } from 'react';
 
 import { useDispatch,useSelector } from 'react-redux';
 import {useNavigate } from 'react-router-dom';
@@ -28,16 +28,21 @@ import "cropperjs/dist/cropper.css";
 
 //  firebase storage 
 import { getStorage, ref, uploadString , getDownloadURL } from "firebase/storage";
-import { logedUser } from '../slice/userSlice';
+import { getDatabase, ref as dref, set } from "firebase/database";
+import { logedUser } from '../slice/userSlice';   
+
+
 
 const Sideber = () => {
+  const auth = getAuth();
+  const db = getDatabase();
+  const storage = getStorage();
 
-    const storage = getStorage();
-    
-    const auth = getAuth();
+
     let dispatch = useDispatch()
     let navigate = useNavigate()
     let userInfo = useSelector((state) => state.activeUser.value)
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -51,6 +56,9 @@ const Sideber = () => {
     //     dispatch(activeuser(null))
     //     localStorage.removeItem("user")
     // }
+
+  
+   
 
     
     const style = {
@@ -91,14 +99,19 @@ const Sideber = () => {
             uploadString(storageRef, message4, 'data_url').then((snapshot) => {
             console.log('Uploaded a data_url string!',snapshot);
             getDownloadURL(storageRef).then((downloadURL) => {
-                console.log('File available at', downloadURL);
                 updateProfile(auth.currentUser, {
                     photoURL:  downloadURL
                   }).then(() => {
-                    console.log("user")
-                    dispatch(logedUser({...userInfo,photoURL:downloadURL}))
-                    localStorage.setItem("user", JSON.stringify({...userInfo,photoURL:downloadURL}))
-                    setImage("")
+                    set(dref(db, 'users/' + userInfo.uid), {
+                      username: userInfo.displayName,
+                      email: userInfo.email,
+                      profile_picture : downloadURL
+                    }).then(() => {
+                      console.log("user", downloadURL)
+                      dispatch(logedUser({...userInfo,photoURL:downloadURL}))
+                      localStorage.setItem("user", JSON.stringify({...userInfo,photoURL:downloadURL}))
+                      setImage("")
+                    })
                   })
               });
             });
@@ -110,7 +123,7 @@ const Sideber = () => {
 
   return (
     <div className='sideber'>
-        <img  onClick={handleOpen} src={userInfo.photoURL} alt="" className='profile'/>
+        <img  onClick={handleOpen} src={userInfo.photoURL} alt="" className='profile'/> 
         <div>
             <h2 className='profilename'>{userInfo.displayName}</h2>
         </div>
@@ -173,7 +186,6 @@ const Sideber = () => {
          
         }
           <input  onChange={onChange} 
-            // name="upload-photo"
             type="file"
             />
           {
@@ -181,7 +193,7 @@ const Sideber = () => {
             <Cropper
             ref={cropperRef}
             style={{ height: 400, width: "100%" }}
-            zoomTo={0.5}
+            zoomTo={0.3}
             initialAspectRatio={1}
             preview=".img-preview"
             src={image}
@@ -198,7 +210,10 @@ const Sideber = () => {
            {
             image &&
              <>
-             <button style={{ float: "right" }} onClick={getCropData}> upload </button>
+             <button style={{ float: "right" }} onClick={getCropData}> Upload </button>
+            {/* {   
+              onclick={handleClose}
+            } */}
              {/* <button style={{ float: "right" }} onClick={()=>setImage("")}> cancel </button> */}
              </>
            }

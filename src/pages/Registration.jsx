@@ -58,7 +58,10 @@ const Registration = () => {
   
 
   let [passwordeye, setPasswordeye] = useState(false)
+  let handleLobby = ()=> {
+    navigate("page")
 
+  }
 
 
     const auth = getAuth();
@@ -93,7 +96,7 @@ const Registration = () => {
         createUserWithEmailAndPassword(auth, regdata.email, regdata.password)
         .then((userCredential) => {
           updateProfile(auth.currentUser, {
-            displayName: regdata.fullname, photoURL:  "https://firebasestorage.googleapis.com/v0/b/hashikhushi-825a3.appspot.com/o/%E2%80%94Pngtree%E2%80%94male%20student%20icon_3728104.png?alt=media&token=09f29de6-431d-43a6-923c-c9db7c98a197"
+            displayName: regdata.fullname, photoURL: "https://firebasestorage.googleapis.com/v0/b/hashikhushi-825a3.appspot.com/o/%E2%80%94Pngtree%E2%80%94male%20student%20icon_3728104.png?alt=media&token=09f29de6-431d-43a6-923c-c9db7c98a197"
           }).then(() => {
             sendEmailVerification(auth.currentUser)
             .then(() => {
@@ -196,6 +199,7 @@ const Registration = () => {
         <>
     <Grid item xs={6}>
       <div className='regbox'>
+      <Button variant="outlined" onClick={handleLobby}>Go to Lobby</Button>
         <h1>Get started with easily register</h1>
         <p>Free register and you can enjoy it</p>
         <div>

@@ -9,7 +9,6 @@ export const userSlice = createSlice({
   },
   reducers: {
     logedUser: (state,action) => {  
-      console.log("loged user",action.payload)
       state.value = action.payload
     }
   },

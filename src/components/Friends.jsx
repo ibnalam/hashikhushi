@@ -42,7 +42,6 @@ const Friends = () => {
         setEmpty(e.target.value)
         console.log(e.target.value)
         let user =  userList.filter(item=> item.username.toLowerCase().includes(e.target.value.toLowerCase()))
-
         console.log(user)
         setSearch(user)
 

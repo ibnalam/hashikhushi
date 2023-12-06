@@ -8,34 +8,63 @@ import mijan from "../assets/mijan.png"
 import sohan from "../assets/sohan.png"
 import sonia from "../assets/sonia.png"
 import Button from '@mui/material/Button';
-import { getDatabase, ref, onValue  } from "firebase/database";
+import { getDatabase, ref, onValue , set , push  } from "firebase/database";
 
 
 import TextField from '@mui/material/TextField';
 
 
 const Userlist = () => {
-    const db = getDatabase();
 
+    const db = getDatabase();
     let [userList, setUserlist] = useState([])
     let [search, setSearch] = useState([])
     let [empty, setEmpty] = useState([])
     let userInfo = useSelector((state) => state.activeUser.value)
-   
+
+
+    
 
     useEffect(()=> {
          const userRef = ref(db, 'users');
         onValue(userRef, (snapshot) => {
             let arr = []
             snapshot.forEach(item=> {
-                if(item.key != userInfo.uid ){
-                    arr.push(item.val())  
+                if(item.key != userInfo.uid){
+                    arr.push({...item.val(),userid:item.key})  
                 }
-                console.log(item.key)
+                // console.log(item.key)
             })
             setUserlist(arr)
         });
     },[])
+
+
+    let [frid, setfrid] = useState([])
+    let [fid, setfid] = useState([])
+
+    useEffect(()=> {
+        const friendrequestRef = ref(db, 'friendrequest');
+       onValue(friendrequestRef, (snapshot) => {
+           let arr = []
+           snapshot.forEach(item=> {
+                arr.push(item.val().whosendid+item.val().whorechiveid)
+                //  + item.val().whorechiveid
+           })
+           setfrid(arr)
+       });
+   },[])
+    useEffect(()=> {
+        const friendrequestRef = ref(db, 'friends');
+       onValue(friendrequestRef, (snapshot) => {
+           let arr = []
+           snapshot.forEach(item=> {
+                arr.push(item.val().whosendid+item.val().whorechiveid)
+                //  + item.val().whorechiveid
+           })
+           setfid(arr)
+       });
+   },[])
 
     let handleSearch = (e)=>{
         setEmpty(e.target.value)
@@ -52,6 +81,24 @@ const Userlist = () => {
 
         // })
 
+    }
+
+    let handleFriend = (item)=> {
+        console.log({
+            whosendid: userInfo.uid,
+            whosendname: userInfo.displayName,
+            whorechiveid: item.userid,
+            whorechivename:item.username
+        })
+        set(push(ref(db, 'friendrequest')), {
+            whosendid: userInfo.uid,
+            whosendname: userInfo.displayName,
+            whorechiveid: item.userid,
+            whorechivename:item.username
+          }).then(()=>{
+            console.log("done")
+          })
+        // console.log(item)
     }
 
 
@@ -73,12 +120,24 @@ const Userlist = () => {
         ?
         userList.map(item=> (
             <div className='List'>
-            <img src={item.profile_picture} alt="" />
+            <img src={item.profile_picture} alt=""/>
             <div>
                 <h3>{item.username}</h3>
                 <p>Hi Guys, Wassup!</p>
             </div>
-            <Button variant="contained">Join</Button>
+            {
+                frid.includes(userInfo.uid+item.userid) || frid.includes(item.userid+userInfo.uid )
+
+                ?
+                
+                <Button variant="contained" disabled >pending</Button>
+                : fid.includes(userInfo.uid+item.userid) || fid.includes(item.userid+userInfo.uid ) 
+                ?
+                <Button variant="contained" color='success' >Friends</Button>
+                :
+
+                <Button variant="contained" onClick={()=>handleFriend(item)}>+</Button>
+            }
         </div>
         ))
          :
@@ -90,7 +149,7 @@ const Userlist = () => {
                 <h3>{item.username}</h3>
                 <p>Hi Guys, Wassup!</p>
             </div>
-            <Button variant="contained">Join</Button>
+            <Button variant="contained" onClick={handleFriend}>+</Button>
         </div>
         ))
         : 
