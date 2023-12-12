@@ -5,7 +5,6 @@ import { IoHomeOutline } from "react-icons/io5";
 import { AiTwotoneMessage } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdLogout } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { useState, useRef, createRef } from 'react';
 
@@ -30,6 +29,7 @@ import "cropperjs/dist/cropper.css";
 import { getStorage, ref, uploadString , getDownloadURL } from "firebase/storage";
 import { getDatabase, ref as dref, set } from "firebase/database";
 import { logedUser } from '../slice/userSlice';   
+import Logout from '../pages/Logout';
 
 
 
@@ -155,7 +155,8 @@ const Sideber = () => {
 
             <div className='icons-part logpart'>
             <Link to="/page/logout" className={window.location.pathname == "/page/logout" && "active"} >
-                 <MdLogout className='icon'/>
+                 <Logout/>
+
             </Link>
             </div>
 

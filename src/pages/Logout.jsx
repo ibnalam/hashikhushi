@@ -4,7 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { logedUser } from '../slice/userSlice';
-
+import { MdLogout } from "react-icons/md";
 
 
 
@@ -26,16 +26,21 @@ const Logout = () => {
             localStorage.removeItem("user")
           })
     }
-    useEffect(()=>{
-      if(userInfo == null){
-        navigate("/login")
-      }
-    },[])
+    // useEffect(()=>{
+    //   if(userInfo == null){
+    //     navigate("/login")
+    //   }
+    // },[])
 
 
   return (
    
-    <Button onClick={handleLogout} variant="contained">Log Out</Button>
+ <>
+    <div onClick={handleLogout}>
+       <MdLogout className='icon'/>
+    </div>
+
+ </>
 
   )
 }

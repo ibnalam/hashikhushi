@@ -2,11 +2,16 @@ import { createSlice } from '@reduxjs/toolkit'
 // import { json } from 'react-router-dom'                        
 
 
+
+
+const initialState = {
+  value: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):null,
+}
+
+
 export const userSlice = createSlice({
   name: 'loginuser',
-  initialState: {
-    value: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")):null,
-  },
+  initialState,
   reducers: {
     logedUser: (state,action) => {  
       state.value = action.payload

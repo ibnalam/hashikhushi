@@ -20,6 +20,7 @@ const Userlist = () => {
     let [userList, setUserlist] = useState([])
     let [search, setSearch] = useState([])
     let [empty, setEmpty] = useState([])
+    // let [searchUserList,setSearchUserList] =useState([])
     let userInfo = useSelector((state) => state.activeUser.value)
 
 
@@ -66,22 +67,24 @@ const Userlist = () => {
        });
    },[])
 
+
+
     let handleSearch = (e)=>{
         setEmpty(e.target.value)
-        console.log(e.target.value)
         let user =  userList.filter(item=> item.username.toLowerCase().includes(e.target.value.toLowerCase()))
-
-        console.log(user)
         setSearch(user)
-             
-    
-
-        // userList.filter(item=> {
-        //     console.log(item.username.toLowerCase().includes(e.target.value.toLowerCase())) 
-
-        // })
-
     }
+
+
+    // let handleSearch =(e)=>{
+    //     let filterUser =  userList.filter((item)=>{
+    //       setEmpty(e.target.value)
+    //         return item.userName.toLowerCase().includes(e.target.value.toLowerCase())
+    //       })
+    //     setSearchUserList(filterUser)
+    //     }
+
+
 
     let handleFriend = (item)=> {
         console.log({
@@ -92,7 +95,7 @@ const Userlist = () => {
         })
         set(push(ref(db, 'friendrequest')), {
             whosendid: userInfo.uid,
-            whosendname: userInfo.displayName,
+            whosendname: userInfo.displayName, 
             whorechiveid: item.userid,
             whorechivename:item.username
           }).then(()=>{
@@ -141,6 +144,12 @@ const Userlist = () => {
         </div>
         ))
          :
+
+
+
+      
+
+
          search.length > 0 ?
          search.map(item=> (
             <div className='List'>

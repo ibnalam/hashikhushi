@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import profile from '../assets/profile/png'
+import hsc from "../assets/hsc.png"
 import Button from '@mui/material/Button';
 import { getDatabase, ref, onValue,remove,set,push } from "firebase/database";
 import { useSelector } from 'react-redux';
@@ -17,7 +17,6 @@ const Frindrequest = () => {
          let arr = []
          snapshot.forEach(item=>{
             if(userInfo.uid == item.val().whorechiveid){
-
                arr.push({...item.val(),frid:item.key})
             }
          })
@@ -30,6 +29,7 @@ const Frindrequest = () => {
       remove(ref(db, 'friendrequest/'+item.frid))
    }
 
+    
    let handleAccept = (item)=>{
       set(push(ref(db, 'friends')), {
          ...item
@@ -64,7 +64,7 @@ const Frindrequest = () => {
          ?
         requestList.map(item=>(
             <div className='List'>
-              <img src={item.profile_picture} alt="" />
+              <img src={hsc} alt="" />
               <h3>{item.whosendname}</h3>
               <Button variant="contained" onClick={()=>handleAccept(item)}>Accept</Button>
               <Button variant="contained" color='error' onClick={()=>handlecancel(item)}>Cancel</Button>

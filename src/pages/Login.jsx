@@ -59,7 +59,7 @@ const Login = () => {
                     email:"",
                     password:""
                 })
-                navigate("/logout")
+                navigate("/page/homee")
                 setLoader(false)
             }else {
                 toast("Please verify your email ")
