@@ -55,6 +55,7 @@ const Userlist = () => {
            setfrid(arr)
        });
    },[])
+   
     useEffect(()=> {
         const friendrequestRef = ref(db, 'friends');
        onValue(friendrequestRef, (snapshot) => {

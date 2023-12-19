@@ -109,7 +109,6 @@ const Registration = () => {
                     email:"",
                     fullname:"",
                     password:"",
-
                 })
                 navigate("/login")
                 setLoader(false)
@@ -130,6 +129,8 @@ const Registration = () => {
                 toast("please give atleast 6 charecter")     
             }
           });
+
+
         // if(regdata.email == ""){
         //     toast.error("Please give an email")
          

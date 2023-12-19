@@ -26,7 +26,7 @@ const Friends = () => {
     let [friendList,setFriendList] = useState([])
     let dispatch = useDispatch()
 
-
+    let userInfo = useSelector((state)=>state.activeUser.value)
     let [userList, setUserlist] = useState([])
     let [search, setSearch] = useState([])
     let [empty, setEmpty] = useState([])
@@ -44,19 +44,19 @@ const Friends = () => {
 
 
 
-    useEffect(()=>{
-        const friendrequesttRef = ref(db, 'friendrequest');
-        onValue(friendrequesttRef, (snapshot) => {
-          let arr = []
-          snapshot.forEach(item=>{
-            if(item.val().whoreceiveid == data.uid){
-                console.log(data)
-              arr.push({...item.val(),frid:item.key})
-            }
-          })
-          setReqList(arr)
-        });
-      },[])
+    // useEffect(()=>{
+    //     const friendrequesttRef = ref(db, 'friendrequest');
+    //     onValue(friendrequesttRef, (snapshot) => {
+    //       let arr = []
+    //       snapshot.forEach(item=>{
+    //         if(item.val().whoreceiveid == data.uid){
+    //             console.log(data)
+    //           arr.push({...item.val(),frid:item.key})
+    //         }
+    //       })
+    //       setReqList(arr)
+    //     });
+    //   },[])
 
       useEffect(()=>{
         const friendRef = ref(db, 'friends');
@@ -64,8 +64,12 @@ const Friends = () => {
           let arr = []
           snapshot.forEach(item=>{
             // console.log("ami friend",item.val())
-            if(item.val().whosendid == data.uid || item.val().whoreceiveid == data.uid){
-              arr.push({...item.val(),fid:item.key})
+            // if(item.val().whosendid == data.uid || item.val().whoreceiveid == data.uid){
+            //   arr.push({...item.val(),fid:item.key})
+            // }
+
+            if(userInfo.uid == item.val().whosendid || userInfo.uid == item.val().whorechiveid){
+              arr.push({...item.val(),id:item.key})
             }
           })
           setFriendList(arr)
@@ -91,6 +95,32 @@ const Friends = () => {
 
 
 
+    let handleBlock = (item) => {
+      if(userInfo.uid == item.whosendid){
+      set(push(ref(db, 'block')), {
+        id:item.id,
+        blockby: userInfo.displayName,
+        blockbyid: userInfo.uid,
+        block: item.whorechivename,
+        blockid : item.whorechiveid,
+      }).then(()=>{
+        remove(ref(db, 'friends/'+item.id))
+      })
+      }else if(userInfo.uid == item.whorechiveid){
+        set(push(ref(db, 'block')), {
+          id:item.id,
+          blockby: userInfo.displayName,
+          blockbyid: userInfo.uid,
+          block: item.whosendname,
+          blockid : item.whosendid,
+        }).then(()=>{
+          remove(ref(db, 'friends/'+item.id))
+        })
+      }
+    }
+
+
+
 
 
 
@@ -110,11 +140,19 @@ const Friends = () => {
             <div className='List'>
             <img src={hsc} alt="" />
             <div>
-                <h3>{item.whosendid == data.uid ? item.whoreceivename:item.whosendname}</h3>
+                {/* <h3>{item.whosendid == data.uid ? item.whoreceivename:item.whosendname}</h3>/ */}
+                {
+                  userInfo.uid == item.whosendid 
+                  ? 
+                  <h3>{item.whorechivename}</h3>
+                  :
+                  <h3>{item.whosendname}</h3>
+                }
                 {/* <h3>{item.whosendname}</h3> */}
                 <p>Hi Guys, Wassup!</p>
             </div>
-            <Button variant="contained">Join</Button>
+            <Button variant="contained" onClick={()=>handleBlock(item)}>block</Button>
+            <Button variant="contained">unfriend</Button>
         </div>
         ))
          :
